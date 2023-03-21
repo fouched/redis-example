@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\WelcomeController;
+use \App\Http\Controllers\BlogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-//    return view('welcome');
-    $redis = app()->make('redis');
-    $redis->set('key1', 'testValue');
-    return $redis->get('key1');
-});
+Route::get('/', [WelcomeController::class, 'index'])->name('welcome.index');
+Route::get('/article/{id}', [BlogController::class, 'showArticle'])
+    ->name('blog.show-article')->whereNumber('id');
 
